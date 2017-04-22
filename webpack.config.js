@@ -1,40 +1,40 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:8080/',
     'webpack/hot/only-dev-server',
-    './src'
+    './src',
   ],
 
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'app.js'
+    filename: 'bundle.js',
   },
   resolve: {
     modules: ['node_modules', 'src'],
-    extensions:  ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   devServer: {
-    port: 8080
+    port: 8080,
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         query:
-          {
-            presets:['react']
-          }
-      }
-    ]
+        {
+          presets: ['react'],
+        },
+      },
+    ],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 };
