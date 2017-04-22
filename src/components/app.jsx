@@ -1,9 +1,30 @@
 import React from 'react';
+import Todo from './todo';
+
+const todoList = [
+  {
+    task: 'Clean Dishes',
+    isCompleted: true,
+  },
+  {
+    task: 'Tidy Frontroom',
+    isCompleted: false,
+  },
+];
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      todos: todoList,
+    };
+  }
+
   render() {
     return (
-      <h1>It Works!</h1>
+      <Todo todoList={this.state.todos} />
     );
   }
 }
