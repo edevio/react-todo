@@ -1,7 +1,7 @@
 import React from 'react';
-import Todo from './todo';
+import TodoList from './todo-list';
 
-const todoList = [
+const todos = [
   {
     task: 'Clean Dishes',
     isCompleted: true,
@@ -18,13 +18,36 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      todos: todoList,
+      todos
     };
+  }
+
+  addTodo(task) {
+
+    this.state.todos.push ({
+      task,
+      isCompleted: false
+    });
+
+    this.setState(
+      todos
+    );
+
+  }
+
+  editTodo(taskOld, taskNew) {
+    const selectedTask = todos.find( todo => todo.task === taskOld );
+    selectedTask.task = taskNew;
+    this.setState({ todos: this.state.todos });
   }
 
   render() {
     return (
-      <Todo todoList={this.state.todos} />
+      <TodoList
+        todos={this.state.todos}
+        addTodo={this.addTodo.bind(this)}
+        editTodo={this.editTodo.bind(this)}
+      />
     );
   }
 }
