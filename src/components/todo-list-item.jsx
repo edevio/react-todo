@@ -10,57 +10,52 @@ class TodoListItem extends React.Component {
     };
   }
 
+  onEditClick() {
+    this.setState({ isEditing: true });
+  }
+
+
+  onCancelClick() {
+    this.setState({ isEditing: false });
+  }
+
+  onSaveClick() {
+    const taskNew = this.refs.inputEdit.value;
+    const taskOld = this.props.task;
+    this.props.editTodo(taskOld, taskNew);
+    this.setState({ isEditing: false });
+  }
+
+  renderTaskButtons() {
+    if (this.state.isEditing) {
+      return (
+        <div>
+          <button className="btn btn-primary" onClick={this.onSaveClick.bind(this)}>Save</button>
+          <button className="btn btn-danger" onClick={this.onCancelClick.bind(this)}>Cancel</button>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <button className="btn btn-primary" onClick={this.onEditClick.bind(this)}>Edit</button>
+        <button className="btn btn-danger">Delete</button>
+      </div>
+    );
+  }
+
   renderTaskItem() {
-
     const { task, isCompleted } = this.props;
-
-    console.log(task);
 
     if (this.state.isEditing) {
       return (
         <form action="">
           <input defaultValue={task} type="text" ref="inputEdit"/>
         </form>
-      )
+      );
     }
-    else {
-      return(
-        <p>{task}</p>
-      )
-    }
-  }
-
-  renderTaskButtons() {
-    if (this.state.isEditing) {
-      return(
-        <div>
-          <button className="btn btn-primary" onClick={this.onSaveClick.bind(this)}>Save</button>
-          <button className="btn btn-danger">Delete</button>
-        </div>
-      )
-    }
-    else {
     return (
-      <div>
-        <button className="btn btn-primary" onClick={this.onEditClick.bind(this)}>Edit</button>
-        <button className="btn btn-danger">Delete</button>
-      </div>
-    )
-    }
-  }
-
-  onEditClick() {
-    this.setState({ isEditing: true });
-  }
-
-  onSaveClick() {
-    const taskNew = this.refs.inputEdit.value;
-    const taskOld = this.props.task;
-
-    this.props.editTodo(taskOld, taskNew);
-
-    this.setState({ isEditing: false });
-
+      <p>{task}</p>
+    );
   }
 
   render() {
