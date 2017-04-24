@@ -10,8 +10,8 @@ class TodoListItemAdd extends React.Component {
 
   render() {
     return (
-      <div>
-        <input type="text" ref="inputCreate"/>
+      <div className="form-group">
+        <input className="form-control" type="text" ref="inputCreate"/>
         <button className="btn btn-primary" onClick={this.addItem.bind(this)}>Add</button>
       </div>
     );

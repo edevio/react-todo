@@ -51,7 +51,9 @@ class TodoListItem extends React.Component {
     if (this.state.isEditing) {
       return (
         <form action="">
-          <input defaultValue={task} type="text" ref="inputEdit"/>
+          <div className="form-group">
+            <input className="form-control" defaultValue={task} type="text" ref="inputEdit"/>
+          </div>
         </form>
       );
     }
