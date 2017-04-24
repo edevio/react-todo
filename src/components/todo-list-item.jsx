@@ -14,7 +14,6 @@ class TodoListItem extends React.Component {
     this.setState({ isEditing: true });
   }
 
-
   onCancelClick() {
     this.setState({ isEditing: false });
   }
@@ -38,13 +37,16 @@ class TodoListItem extends React.Component {
     return (
       <div>
         <button className="btn btn-primary" onClick={this.onEditClick.bind(this)}>Edit</button>
-        <button className="btn btn-danger">Delete</button>
+        <button className="btn btn-danger" onClick={this.props.deleteTodo.bind(this, this.props.id)}>Delete</button>
       </div>
     );
   }
 
   renderTaskItem() {
     const { task, isCompleted } = this.props;
+
+
+    const cssClass = isCompleted ? 'text-success' : 'text-danger';
 
     if (this.state.isEditing) {
       return (
@@ -54,7 +56,7 @@ class TodoListItem extends React.Component {
       );
     }
     return (
-      <p>{task}</p>
+      <p className={cssClass} onClick={this.props.toggleTodoStatus.bind(this, task)} ref="inputDelete">{task}</p>
     );
   }
 

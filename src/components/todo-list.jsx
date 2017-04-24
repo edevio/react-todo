@@ -1,7 +1,6 @@
 import React from 'react';
 import TodoListItem from './todo-list-item';
 import TodoListItemAdd from './todo-add-item';
-import shortid from 'shortid';
 
 class Todo extends React.Component {
 
@@ -10,7 +9,7 @@ class Todo extends React.Component {
       this.props.todos.map(todoListItem => {
         return (
           <TodoListItem
-            key={shortid.generate()}
+            key={todoListItem.id}
             {...todoListItem}
             {...this.props}
           />
@@ -22,7 +21,7 @@ class Todo extends React.Component {
   render() {
     return (
       <div>
-      <ul>
+      <ul className="list-unstyled">
         {this.renderTodoListItem()}
       </ul>
         <TodoListItemAdd
