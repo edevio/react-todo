@@ -5,6 +5,7 @@ class TodoListItemAdd extends React.Component {
   addItem() {
     event.preventDefault();
     this.props.addTodo(this.refs.inputCreate.value);
+    this.refs.inputCreate.value = '';
   }
 
   render() {
