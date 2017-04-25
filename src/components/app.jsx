@@ -1,6 +1,8 @@
 import React from 'react';
 import TodoList from './todo-list';
 import shortid from 'shortid';
+// import sampleContent from '../sample-todo';
+import base from '../base';
 
 const todos = [
   {
@@ -21,8 +23,26 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      todos
+      todos: []
     };
+  }
+
+  componentWillMount() {
+    this.ref = base.syncState(`List` ,{
+        context: this,
+        state: 'todos',
+        asArray: true,
+      });
+  }
+
+  componentDidMount() {
+    this.setState ({
+      todos: todos
+    })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
   }
 
   addTodo(task) {
@@ -51,9 +71,13 @@ class App extends React.Component {
   }
 
   editTodo(taskOld, taskNew) {
+    console.log(`${taskOld} ${taskNew}`);
     const selectedTask = todos.find( todo => todo.task === taskOld );
+    console.log(selectedTask)
+    console.log(taskNew);
     selectedTask.task = taskNew;
-    this.setState({ todos: this.state.todos });
+
+    this.setState({ todos: todos });
   }
 
   toggleTodoStatus(task) {
