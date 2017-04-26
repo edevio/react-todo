@@ -1,7 +1,6 @@
 import React from 'react';
 import TodoList from './todo-list';
 import shortid from 'shortid';
-// import sampleContent from '../sample-todo';
 import base from '../base';
 
 const todos = [
@@ -24,21 +23,36 @@ class App extends React.Component {
 
     this.state = {
       todos: []
-    };
+    }
+
   }
 
   componentWillMount() {
+
+    base.fetch(`List`, {
+      context: this,
+      asArray: true
+    }).then(data => {
+      if (data.length > 0 ) {
+        // Returned non-empty array of data
+        this.setState({ todos: data });
+      } else {
+        // Returned empty array.
+        this.setState({ todos: todos });
+      }
+    }
+    ).catch(error => {
+      //handle error
+      console.log(error);
+    })
+
+    // Set-up two way sync.
     this.ref = base.syncState(`List` ,{
         context: this,
         state: 'todos',
         asArray: true,
       });
-  }
 
-  componentDidMount() {
-    this.setState ({
-      todos: todos
-    })
   }
 
   componentWillUnmount() {
@@ -47,22 +61,26 @@ class App extends React.Component {
 
   addTodo(task) {
 
+    if (!task) {
+      return;
+    }
+
     this.state.todos.push ({
       task,
       isCompleted: false,
       id: shortid.generate(),
     });
 
-    this.setState(
-      todos
-    );
+    this.setState({
+      todos: this.state.todos
+    })
   }
 
   deleteTodo(taskId) {
-    const taskToDeleteIndex = todos.findIndex( todo => todo.id === taskId );
+    const taskToDeleteIndex = this.state.todos.findIndex( todo => todo.id === taskId );
 
     if (taskToDeleteIndex > -1){
-      todos.splice(taskToDeleteIndex, 1);
+      this.state.todos.splice(taskToDeleteIndex, 1);
     }
 
     this.setState({
@@ -71,17 +89,13 @@ class App extends React.Component {
   }
 
   editTodo(taskOld, taskNew) {
-    console.log(`${taskOld} ${taskNew}`);
-    const selectedTask = todos.find( todo => todo.task === taskOld );
-    console.log(selectedTask)
-    console.log(taskNew);
-    selectedTask.task = taskNew;
-
-    this.setState({ todos: todos });
+    const taskOldIndex = taskOld.index;
+    this.state.todos[taskOldIndex].task = taskNew;
+    this.setState({ todos: this.state.todos });
   }
 
   toggleTodoStatus(task) {
-    const selectedTask = todos.find( todo => todo.task === task );
+    const selectedTask = this.state.todos.find( todo => todo.task === task );
     selectedTask.isCompleted = !selectedTask.isCompleted;
 
     this.setState({

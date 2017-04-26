@@ -6,10 +6,11 @@ class Todo extends React.Component {
 
   renderTodoListItem() {
     return (
-      this.props.todos.map(todoListItem => {
+      this.props.todos.map(( todoListItem, index )  => {
         return (
           <TodoListItem
             key={todoListItem.id}
+            index={index}
             {...todoListItem}
             {...this.props}
           />

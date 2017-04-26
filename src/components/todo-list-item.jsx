@@ -20,7 +20,7 @@ class TodoListItem extends React.Component {
 
   onSaveClick() {
     const taskNew = this.refs.inputEdit.value;
-    const taskOld = this.props.task;
+    const taskOld = this.props;
     this.props.editTodo(taskOld, taskNew);
     this.setState({ isEditing: false });
   }
@@ -44,7 +44,6 @@ class TodoListItem extends React.Component {
 
   renderTaskItem() {
     const { task, isCompleted } = this.props;
-
 
     const cssClass = isCompleted ? 'text-success' : 'text-danger';
 
