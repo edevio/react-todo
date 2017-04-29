@@ -20,7 +20,10 @@ const defaultProps = {
 };
 const propTypes = {
   todos: PropTypes.array.isRequired,
-  addTodo: PropTypes.func.isRequired,
+  addTodo: PropTypes.func,
+  editTodo: PropTypes.func,
+  delegateTodo: PropTypes.func,
+  toggleTodoStatus: PropTypes.func,
 };
 
 class App extends React.Component {
