@@ -10,6 +10,6 @@ module.exports = {
     task: 'Tidy Frontroom',
     isCompleted: false,
     id: shortid.generate(),
-  }
+  },
 
 };
